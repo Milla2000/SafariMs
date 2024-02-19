@@ -82,8 +82,8 @@ namespace CouponService.Controllers
 
             try
             {
-                var service = new Stripe.CouponService();
-                service.Create(options);
+            var service = new Stripe.CouponService();
+            service.Create(options);
             }
             catch (StripeException ex)
             {

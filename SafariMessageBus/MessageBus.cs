@@ -11,7 +11,11 @@ namespace SafariMessageBus
     public class MessageBus : IMessageBus
     {
 
+<<<<<<< HEAD
         private readonly string connectionString = "Endpoint=sb://millasafaribus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=8mFxT2WBLWis2K+8J6c4Ui13EIuw6VOOb+ASbHFBCYE=";
+=======
+        private readonly string connectionString = "Endpoint=sb://millasafaribus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=tEJS8AXFCi891lGVwKXooQS6EPZKukabt+ASbJpx4Ug=";
+>>>>>>> 268768d41c7d90b2e7dedc4eb0bd38673884ca90
         public async Task PublishMessage(object message, string Topic_Queue_Name)
         {
             //create a client 

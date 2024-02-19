@@ -46,7 +46,12 @@ namespace MailService.Messaging
             await _bookingProcessor.StartProcessingAsync();
         }
 
+<<<<<<< HEAD
         public async Task Stop()
+=======
+        public async Task St
+            op()
+>>>>>>> 268768d41c7d90b2e7dedc4eb0bd38673884ca90
         {
             await _emailProcessor.StopProcessingAsync();
             await _emailProcessor.DisposeAsync();

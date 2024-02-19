@@ -35,8 +35,11 @@
     </Content>
   </ItemGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+=======
+>>>>>>> 268768d41c7d90b2e7dedc4eb0bd38673884ca90
 </Project>
