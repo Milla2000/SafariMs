@@ -132,7 +132,7 @@ namespace BookingService.Services
                 booking.Status = "Paid";
                 booking.PaymentIntent = paymentIntent.Id;
                 await _context.SaveChangesAsync();
-                var user= await _userService.GetUserById(booking.UserId.ToString());
+                var user =await _userService.GetUserById(booking.UserId.ToString());
 
                 if (string.IsNullOrWhiteSpace(user.Email))
                 {
@@ -144,13 +144,13 @@ namespace BookingService.Services
                     {
                         BookingId = booking.Id,
                         BookingTotal=booking.BookingTotal,
-                        Name=user.Name,
-                        Email=user.Email
+                        Name= user.Name,
+                        Email= user.Email
 
                     };
                     await _messageBUs.PublishMessage(reward, "bookingadded");
                 }
-               
+
                 // Send an Email to User
                 //Reward the user with some Bonus Points 
                 return true;

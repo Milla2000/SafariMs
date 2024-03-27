@@ -12,8 +12,8 @@ using TourService.Data;
 namespace TourService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240216134918_ToursService")]
-    partial class ToursService
+    [Migration("20240221192616_TourService")]
+    partial class TourService
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

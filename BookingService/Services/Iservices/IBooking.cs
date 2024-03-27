@@ -16,6 +16,6 @@ namespace BookingService.Services.Iservices
         Task<StripeRequestDto> MakePayments(StripeRequestDto stripeRequestDto);
 
 
-        Task<bool> ValidatePayments(Guid BookingId);
+        Task<bool> ValidatePayments(Guid BookingId );
     }
 }

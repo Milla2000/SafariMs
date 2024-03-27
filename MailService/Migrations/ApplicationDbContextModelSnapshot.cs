@@ -45,11 +45,7 @@ namespace MailService.Migrations
 
                     b.HasKey("Id");
 
-<<<<<<< HEAD
                     b.ToTable("EmailLoggers");
-=======
-                    b.ToTable("EmailLoggers", (string)null);
->>>>>>> 268768d41c7d90b2e7dedc4eb0bd38673884ca90
                 });
 #pragma warning restore 612, 618
         }
