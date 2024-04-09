@@ -367,3 +367,9 @@ FodyWeavers.xsd
 /HotelService/appsettings.Development.json
 /MailService/appsettings.Development.json
 /TourService/appsettings.Development.json
+/BookingService/appsettings.Development.json
+/CouponService/appsettings.Development.json
+/MailService/appsettings.Development.json
+/TourService/appsettings.Development.json
+/HotelService/appsettings.Development.json
+/AuthService/appsettings.Development.json
