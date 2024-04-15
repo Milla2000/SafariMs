@@ -54,6 +54,7 @@ namespace AuthService.Services
            return await _context.ApplicationUsers.Where(x=>x.Id==Id).FirstOrDefaultAsync();   
         }
 
+
         public async Task<LoginResponseDto> loginUser(LoginRequestDto loginRequestDto)
         {
             //a User with that username Exists

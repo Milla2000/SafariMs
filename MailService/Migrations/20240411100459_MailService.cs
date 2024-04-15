@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MailService.Migrations
 {
     /// <inheritdoc />
-    public partial class MailService : Migration
+    public partial class Mailervice : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

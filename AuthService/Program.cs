@@ -4,6 +4,7 @@ using AuthService.Services;
 using AuthService.Services.IServices;
 using AuthService.Utilities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Cors; // Import for CORS
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,27 +16,38 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//service for connectiong to DB
-
+// Service for connecting to DB
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("myconnection"));
 });
 
-//configure Identity Framework
+// Configure Identity Framework
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-//Add Auto Mapper
-
+// Add Auto Mapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//our Services
+// Our Services
 builder.Services.AddScoped<IUser, UserService>();
-builder.Services.AddScoped<IJwt,JwtService>();
+builder.Services.AddScoped<IJwt, JwtService>();
 
-//configure JWTOptions Class
+// Configure JWTOptions Class
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+
+// CORS Configuration (Replace with your allowed origins)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200"); // Replace with your allowed origin(s)
+        // Optionally allow specific methods (GET, POST, etc.)
+        policy.WithMethods("GET", "POST", "PUT", "DELETE");
+        // Optionally allow specific headers
+         policy.WithHeaders("Content-Type", "Authorization");
+    });
+});
 
 var app = builder.Build();
 
@@ -47,6 +59,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Register CORS middleware with the appropriate policy name
+app.UseCors("MyPolicy");
 
 app.UseAuthorization();
 

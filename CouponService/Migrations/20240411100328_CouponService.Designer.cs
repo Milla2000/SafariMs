@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CouponService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221192256_CouponService")]
+    [Migration("20240411100328_CouponService")]
     partial class CouponService
     {
         /// <inheritdoc />
