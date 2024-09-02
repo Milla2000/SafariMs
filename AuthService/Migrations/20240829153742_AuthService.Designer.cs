@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411100143_AuthService")]
+    [Migration("20240829153742_AuthService")]
     partial class AuthService
     {
         /// <inheritdoc />

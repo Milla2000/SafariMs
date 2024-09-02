@@ -8,5 +8,6 @@
         public object Result { get; set; } = default!;
 
         public bool IsSuccess { get; set; } = true;
+
     }
 }

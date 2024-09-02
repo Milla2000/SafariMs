@@ -84,7 +84,7 @@ namespace AuthService.Controllers
             }
 
             _response.Errormessage = "Error Occured ";
-            _response.Result = res;
+            _response.Result = res; 
             _response.IsSuccess = false;
             return BadRequest(_response);
         }

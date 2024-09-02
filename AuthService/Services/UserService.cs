@@ -21,16 +21,16 @@ namespace AuthService.Services
         {
             _context = applicationDbContext;
             _mapper = mapper;
-            _userManager=userManager;
-            _roleManager=roleManager;
-            _JwtServices= jwtService;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _JwtServices = jwtService;
         }
 
-        public async  Task<bool> AssignUserRoles(string Email, string RoleName)
+        public async Task<bool> AssignUserRoles(string Email, string RoleName)
         {
             var user = await _context.ApplicationUsers.Where(x => x.Email.ToLower() == Email.ToLower()).FirstOrDefaultAsync();
             //does  the user exist?
-            if(user == null)
+            if (user == null)
             {
                 return false;
             }
@@ -40,7 +40,7 @@ namespace AuthService.Services
                 if (!_roleManager.RoleExistsAsync(RoleName).GetAwaiter().GetResult())
                 {
                     //create the role 
-                   await _roleManager.CreateAsync(new IdentityRole(RoleName));
+                    await _roleManager.CreateAsync(new IdentityRole(RoleName));
                 }
 
                 //assign the user the role
@@ -51,7 +51,7 @@ namespace AuthService.Services
 
         public async Task<ApplicationUser> GetUserById(string Id)
         {
-           return await _context.ApplicationUsers.Where(x=>x.Id==Id).FirstOrDefaultAsync();   
+            return await _context.ApplicationUsers.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
 
 
@@ -61,22 +61,24 @@ namespace AuthService.Services
             var user = await _context.ApplicationUsers.Where(x => x.UserName.ToLower() == loginRequestDto.UserName.ToLower()).FirstOrDefaultAsync();
             //compare hashed password with plain text password 
             var isValid = _userManager.CheckPasswordAsync(user, loginRequestDto.Password).GetAwaiter().GetResult();
-     
+
             if (!isValid || user == null)
             {
                 //if username or password or the two are wrong
                 return new LoginResponseDto();
             }
-            var loggeduser=_mapper.Map<UserDto>(user);
+            var loggeduser = _mapper.Map<UserDto>(user);
 
             var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault() ?? string.Empty; ;
 
             var token = _JwtServices.GenerateToken(user, roles);
 
             var response = new LoginResponseDto()
             {
                 User = loggeduser,
-                Token = token
+                Token = token,
+                Role = role
             };
 
             return response;
@@ -88,22 +90,22 @@ namespace AuthService.Services
             {
                 var user = _mapper.Map<ApplicationUser>(userDto);
 
-                //create user
+                // create user
                 var result = await _userManager.CreateAsync(user, userDto.Password);
 
-                //if this succeeded
-                if(result.Succeeded)
+                // if this succeeded
+                if (result.Succeeded)
                 {
 
-                    ////does the role exist 
-                    //if (!_roleManager.RoleExistsAsync(userDto.Role).GetAwaiter().GetResult())
-                    //{
-                    //    //create the role 
-                    //    await _roleManager.CreateAsync(new IdentityRole(userDto.Role));
-                    //}
+                    //does the role exist 
+                    if (!_roleManager.RoleExistsAsync(userDto.Role).GetAwaiter().GetResult())
+                    {
+                        //create the role 
+                        await _roleManager.CreateAsync(new IdentityRole(userDto.Role));
+                    }
 
-                    ////assign the user the role
-                    //await _userManager.AddToRoleAsync(user, userDto.Role);
+                    //assign the user the role
+                    await _userManager.AddToRoleAsync(user, userDto.Role);
                     return string.Empty;
                 }
                 else
@@ -111,7 +113,7 @@ namespace AuthService.Services
                     return result.Errors.FirstOrDefault().Description;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
