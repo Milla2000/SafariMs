@@ -6,7 +6,5 @@
         public string Token { get; set; }=string.Empty;
 
         public UserDto User { get; set; } = default!;
-
-        public string Role { get; set; } = string.Empty;
     }
 }

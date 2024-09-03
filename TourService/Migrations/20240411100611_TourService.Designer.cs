@@ -12,7 +12,7 @@ using TourService.Data;
 namespace TourService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240829080510_TourService")]
+    [Migration("20240411100611_TourService")]
     partial class TourService
     {
         /// <inheritdoc />

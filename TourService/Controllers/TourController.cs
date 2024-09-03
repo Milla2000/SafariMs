@@ -27,7 +27,7 @@ namespace TourService.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<ResponseDto>> AddTour(AddTourDto addTourDto)
         {
             var tour = _mapper.Map<Tour>(addTourDto);
