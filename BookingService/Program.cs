@@ -36,6 +36,7 @@ builder.Services.AddHttpClient("Coupons", c => c.BaseAddress = new Uri(builder.C
 builder.Services.AddHttpClient("Hotels", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:HotelService")));
 builder.Services.AddHttpClient("Users", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:UserService")));
 
+
 var app = builder.Build();
 
 

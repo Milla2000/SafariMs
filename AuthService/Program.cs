@@ -35,6 +35,8 @@ builder.Services.AddScoped<IJwt, JwtService>();
 
 // Configure JWTOptions Class
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 
 // CORS Configuration (Replace with your allowed origins)
 builder.Services.AddCors(options =>
