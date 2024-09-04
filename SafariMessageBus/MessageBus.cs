@@ -1,4 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,16 @@ namespace SafariMessageBus
     public class MessageBus : IMessageBus
     {
 
-        private readonly string connectionString = "Endpoint=sb://millasafaribus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=8mFxT2WBLWis2K+8J6c4Ui13EIuw6VOOb+ASbHFBCYE=";
+        private readonly string _connectionString;
 
+        public MessageBus(IConfiguration configuration)
+        {
+            _connectionString = configuration["ServiceBus:ConnectionString"];
+        }
         public async Task PublishMessage(object message, string Topic_Queue_Name)
         {
             //create a client 
-            var client = new ServiceBusClient(connectionString);
+            var client = new ServiceBusClient(_connectionString);
 
             ServiceBusSender sender = client.CreateSender(Topic_Queue_Name);
 

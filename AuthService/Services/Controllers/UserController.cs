@@ -42,7 +42,7 @@ namespace AuthService.Controllers
                     Email=registerUserDto.Email,
                 };
 
-                var mb = new MessageBus();
+                var mb = new MessageBus(_configuration);
                 await mb.PublishMessage(message, _configuration.GetValue<string>("ServiceBus:register"));
 
                 return Created("", _response);
