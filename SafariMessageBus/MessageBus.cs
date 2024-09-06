@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace SafariMessageBus
     public class MessageBus : IMessageBus
     {
 
-        private readonly string _connectionString;
+
+        //Add the message bus connectionString credentials here
 
         public MessageBus(IConfiguration configuration)
         {
