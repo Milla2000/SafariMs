@@ -26,21 +26,34 @@ namespace TourService.Controllers
             _responseDto = new ResponseDto();
         }
 
-        [HttpPost]
-        [Authorize(Roles ="Admin")]
-        public async Task<ActionResult<ResponseDto>> AddTour(AddTourDto addTourDto)
+        [HttpPost("AddNewTour")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDto>> AddNewTour(AddTourDto addTourDto)
         {
             var tour = _mapper.Map<Tour>(addTourDto);
+
             var res = await _tourService.AddNewTour(tour);
+
+            // Map the image URLs from DTO to the TourImages list
+            foreach (var imageUrl in addTourDto.SafariImages)
+            {
+                tour.SafariImages.Add(new TourImage
+                {
+                   // Id = Guid.NewGuid(),
+                    Image = imageUrl,
+                    TourId = tour.Id
+                });
+            }
+
             _responseDto.Result = res;
             return Created("", _responseDto);
 
         }
 
 
-        [HttpGet]
+        [HttpGet("getAllTours")]
 
-        public async Task<ActionResult<ResponseDto>> getTours()
+        public async Task<ActionResult<ResponseDto>> getAllTourz()
         {
            
             var res = await _tourService.GetAllTours();
@@ -50,9 +63,9 @@ namespace TourService.Controllers
         }
 
 
-        [HttpGet("{Id}")]
+        [HttpGet(" getATour/{Id}")]
 
-        public async Task<ActionResult<ResponseDto>> getTour(Guid Id)
+        public async Task<ActionResult<ResponseDto>> getATour(Guid Id)
         {
 
             var res = await _tourService.GetTour(Id);

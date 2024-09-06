@@ -27,7 +27,9 @@ public class CloudinaryController : ControllerBase
     {
         var parameters = new Dictionary<string, object>
         {
-            { "timestamp", ((int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString() }
+            { "timestamp", ((int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString() },
+            { "upload_preset", "new_preset" }
+
         };
         string signature = _cloudinary.Api.SignParameters(parameters);
 

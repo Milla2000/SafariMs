@@ -70,13 +70,15 @@ namespace AuthService.Services
             var loggeduser=_mapper.Map<UserDto>(user);
 
             var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault() ?? string.Empty;
 
             var token = _JwtServices.GenerateToken(user, roles);
 
             var response = new LoginResponseDto()
             {
                 User = loggeduser,
-                Token = token
+                Token = token,
+                role = role
             };
 
             return response;
