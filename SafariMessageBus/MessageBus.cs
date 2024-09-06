@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace SafariMessageBus
     public class MessageBus : IMessageBus
     {
 
-        private readonly string connectionString = "Endpoint=sb://millasafaribus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=8mFxT2WBLWis2K+8J6c4Ui13EIuw6VOOb+ASbHFBCYE=";
+        //Add the message bus connectionString credentials here
 
         public async Task PublishMessage(object message, string Topic_Queue_Name)
         {
