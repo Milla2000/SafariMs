@@ -11,5 +11,7 @@
         public DateTime EndDate { get; set; }
 
         public int Price { get; set; }
+
+        public List<string> SafariImages { get; set; }
     }
 }

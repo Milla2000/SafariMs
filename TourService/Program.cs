@@ -30,6 +30,18 @@ builder.Services.AddScoped<ITour,ToursService>();
 //register automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("TourPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200"); // Replace with your allowed origin(s)
+        // Optionally allow specific methods (GET, POST, etc.)
+        policy.WithMethods("GET", "POST", "PUT", "DELETE");
+        // Optionally allow specific headers
+        policy.WithHeaders("Content-Type", "Authorization");
+    });
+});
+
 
 //Custom Services-Extension Folder
 builder.AddAuth();
@@ -48,6 +60,7 @@ app.UseHttpsRedirection();
 
 app.UseMigrations();
 
+app.UseCors("TourPolicy");
 
 app.UseAuthentication();
 

@@ -1,4 +1,6 @@
 ﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,12 +14,19 @@ namespace SafariMessageBus
     public class MessageBus : IMessageBus
     {
 
+
         //Add the message bus connectionString credentials here
 
+        public MessageBus(IConfiguration configuration)
+        {
+           // MapKey sure to update this with the key in your appsettings.json
+            _connectionString = configuration["ServiceBus:ConnectionString"];
+
+        }
         public async Task PublishMessage(object message, string Topic_Queue_Name)
         {
             //create a client 
-            var client = new ServiceBusClient(connectionString);
+            var client = new ServiceBusClient(_connectionString);
 
             ServiceBusSender sender = client.CreateSender(Topic_Queue_Name);
 

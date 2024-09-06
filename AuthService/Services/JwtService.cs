@@ -24,7 +24,6 @@ namespace AuthService.Services
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             //payload
-
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
             //Adding a list of roles in our payload
