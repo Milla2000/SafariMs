@@ -23,8 +23,9 @@ namespace TourService.Extensions
                         Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtOptions:SecretKey").Value))
                 };
             });
-
+            Console.WriteLine("Authentication Added" + builder);
             return builder;
+
         }
     }
 }

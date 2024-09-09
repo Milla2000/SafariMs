@@ -27,7 +27,7 @@ namespace TourService.Controllers
         }
 
         [HttpPost("AddNewTour")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ResponseDto>> AddNewTour(AddTourDto addTourDto)
         {
             var tour = _mapper.Map<Tour>(addTourDto);
@@ -52,7 +52,7 @@ namespace TourService.Controllers
 
 
         [HttpGet("getAllTours")]
-
+        [Authorize]
         public async Task<ActionResult<ResponseDto>> getAllTourz()
         {
            
@@ -63,7 +63,7 @@ namespace TourService.Controllers
         }
 
 
-        [HttpGet(" getATour/{Id}")]
+        [HttpGet("getATour/{Id}")]
 
         public async Task<ActionResult<ResponseDto>> getATour(Guid Id)
         {

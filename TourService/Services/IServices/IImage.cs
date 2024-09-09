@@ -4,7 +4,6 @@ namespace TourService.Services.IServices
 {
     public interface IImage
     {
-
-        Task<string> AddImage(Guid Id, TourImage images);
+        Task<string> AddImages(Guid Id, List<TourImage> images);
     }
 }

@@ -26,8 +26,8 @@ namespace TourService.Controllers
         }
 
         [HttpPost("{Id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ResponseDto>> AddImage(Guid Id , AddTourImageDto addTourImageDto)
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult<ResponseDto>> AddImages(Guid Id, [FromBody] List<AddTourImageDto> addTourImageDtos)
         {
             var tour = await _tourService.GetTour(Id);
 
@@ -37,11 +37,18 @@ namespace TourService.Controllers
                 return NotFound(_responseDto);
             }
 
-            var image = _mapper.Map<TourImage>(addTourImageDto);
-            var res=await _imageService.AddImage(Id, image);
+            // Map the list of AddTourImageDto to List<TourImage>
+            var images = _mapper.Map<List<TourImage>>(addTourImageDtos);
+
+            // Set the TourId for each image
+            foreach (var image in images)
+            {
+                image.TourId = Id;
+            }
+
+            var res = await _imageService.AddImages(Id, images);
             _responseDto.Result = res;
             return Created("", _responseDto);
-
         }
     }
 }

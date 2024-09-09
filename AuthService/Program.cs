@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200"); // Replace with your allowed origin(s)
+        policy.WithOrigins("http://localhost:4200"); 
         // Optionally allow specific methods (GET, POST, etc.)
         policy.WithMethods("GET", "POST", "PUT", "DELETE");
         // Optionally allow specific headers

@@ -8,7 +8,7 @@ namespace TourService.Services.IServices
 
         Task<List<ToursandImagesResponseDTo>> GetAllTours();
 
-        Task<Tour> GetTour(Guid Id);
+        Task<ToursandImagesResponseDTo> GetTour(Guid Id);
 
         Task<string> AddNewTour(Tour tour);
     }

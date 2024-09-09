@@ -21,8 +21,6 @@ namespace SafariMessageBus
 
         }
         
-
-
         public async Task PublishMessage(object message, string Topic_Queue_Name)
         {
             //create a client 
