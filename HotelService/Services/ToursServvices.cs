@@ -16,15 +16,33 @@ namespace HotelService.Services
         public async Task<TourDto> GetTourById(Guid Id)
         {
             var client = _HttpClientFactory.CreateClient("Tours");
-            var response = await client.GetAsync($"{Id}");
-            var content = await response.Content.ReadAsStringAsync();//string
-            var responseDto = JsonConvert.DeserializeObject<ResponseDto>(content);
-
-            if(response.IsSuccessStatusCode)
+            try
             {
-                return JsonConvert.DeserializeObject<TourDto>(Convert.ToString(responseDto.Result));
+                var response = await client.GetAsync($"getATour/{Id}");
+                var content = await response.Content.ReadAsStringAsync();
+                //var serviceUri = GetAsync($"getATour/{Id}")
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseDto = JsonConvert.DeserializeObject<ResponseDto>(content);
+                    return JsonConvert.DeserializeObject<TourDto>(Convert.ToString(responseDto.Result));
+                }
+                else
+                {
+                    Console.WriteLine($"Error: - {response} - {content}");
+                }
             }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+            }
+
             return new TourDto();
         }
     }
+
 }

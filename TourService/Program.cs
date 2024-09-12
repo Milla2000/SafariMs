@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("TourPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200"); // Replace with your allowed origin(s)
+        policy.WithOrigins("http://localhost:4200", "https://localhost:7000"); 
         // Optionally allow specific methods (GET, POST, etc.)
         policy.WithMethods("GET", "POST", "PUT", "DELETE");
         // Optionally allow specific headers
