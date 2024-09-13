@@ -2,6 +2,7 @@
 using HotelService.Models;
 using HotelService.Models.Dtos;
 using HotelService.Services.Iservices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,7 @@ namespace HotelService.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ResponseDto>> AddHotel(AddHotel newHotel)
         {
             var hotel = _mapper.Map<Hotel>(newHotel);
@@ -33,6 +35,7 @@ namespace HotelService.Controllers
             if (string.IsNullOrWhiteSpace(tour.SafariName))
             {
                 _response.Errormessage = "Tour Not Found";
+                Console.WriteLine(tour);
                 return NotFound(_response);
             }
 
