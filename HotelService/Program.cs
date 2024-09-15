@@ -25,9 +25,6 @@ builder.AddSwaggenGenExtension();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
-
-
-
 builder.Logging.AddConsole();
 
 
