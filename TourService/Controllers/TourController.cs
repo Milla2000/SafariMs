@@ -52,7 +52,6 @@ namespace TourService.Controllers
 
 
         [HttpGet("getAllTours")]
-        [Authorize]
         public async Task<ActionResult<ResponseDto>> getAllTourz()
         {
            
