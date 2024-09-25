@@ -52,9 +52,16 @@ namespace BookingService.Controllers
             booking.BookingTotal = total;
 
             var res=await _bookingService.AddBooking(booking);
-            _responseDto.Result= res;
-            return Ok(_responseDto);
 
+            // Set booking ID in the response
+            _responseDto.Result = new
+            {
+                BookingTotalPrice = booking.BookingTotal,
+                BookingId = booking.Id,
+                Result = res
+            };
+
+            return Ok(_responseDto);
 
         }
 

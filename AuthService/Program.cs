@@ -37,13 +37,22 @@ builder.Services.AddScoped<IJwt, JwtService>();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
+// Configure the Service Bus connection string
+//var serviceBusConnectionString = builder.Configuration["ServiceBusString:ConnectionString"];
+
+//if (string.IsNullOrEmpty(serviceBusConnectionString))
+//{
+//    throw new Exception("Service Bus connection string is missing from appsettings.json.");
+//}
+
+
 
 // CORS Configuration (Replace with your allowed origins)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200"); // Replace with your allowed origin(s)
+        policy.WithOrigins("http://localhost:4200"); 
         // Optionally allow specific methods (GET, POST, etc.)
         policy.WithMethods("GET", "POST", "PUT", "DELETE");
         // Optionally allow specific headers

@@ -39,9 +39,33 @@ namespace TourService.Services
             //return _context.Tours.Include(x=>x.SafariImages).ThenInclude(st();
         }
 
-        public async Task<Tour> GetTour(Guid Id)
+        public async Task<ToursandImagesResponseDTo> GetTour(Guid Id)
         {
-           return await _context.Tours.Where(x=>x.Id == Id).FirstOrDefaultAsync();
+            var tour = await _context.Tours
+                .Include(t => t.SafariImages)
+                .FirstOrDefaultAsync(t => t.Id == Id);
+
+            if (tour == null)
+            {
+                return null; // Or handle accordingly if tour not found
+            }
+
+            // Map the Tour entity to ToursandImagesResponseDTo
+            var tourDto = new ToursandImagesResponseDTo
+            {
+                Id = tour.Id,
+                SafariName = tour.SafariName,
+                SafariDescription = tour.SafariDescription,
+                StartDate = tour.StartDate,
+                EndDate = tour.EndDate,
+                Price = tour.Price,
+                TourImages = tour.SafariImages.Select(img => new AddTourImageDto
+                {
+                    Image = img.Image
+                }).ToList()
+            };
+
+            return tourDto;
         }
 
     }

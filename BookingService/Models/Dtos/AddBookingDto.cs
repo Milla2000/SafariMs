@@ -5,6 +5,7 @@
         public Guid UserId { get; set; }
        
         public double BookingTotal { get; set; }
+
         public int Adults { get; set; }
 
         public int Kids { get; set; }

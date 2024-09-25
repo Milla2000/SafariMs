@@ -11,14 +11,25 @@ namespace TourService.Services
         {
             _context = context;
         }
-        public async Task<string> AddImage(Guid Id, TourImage images)
+
+        public async Task<string> AddImages(Guid Id, List<TourImage> images)
         {
-           //find the tour by Id
-           var tour = _context.Tours.Where(x=>x.Id == Id).FirstOrDefault();
-            tour.SafariImages.Add(images);
+            // Find the tour by Id
+            var tour = _context.Tours.Where(x => x.Id == Id).FirstOrDefault();
+
+            if (tour == null)
+            {
+                return "Tour Not Found";
+            }
+
+            // Add each image to the tour's collection
+            foreach (var image in images)
+            {
+                tour.SafariImages.Add(image);
+            }
+
             await _context.SaveChangesAsync();
-            return "Image Added!!!";
-       
+            return "Images Added!!!";
         }
     }
 }
