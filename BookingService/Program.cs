@@ -37,6 +37,19 @@ builder.Services.AddHttpClient("Hotels", c => c.BaseAddress = new Uri(builder.Co
 builder.Services.AddHttpClient("Users", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:UserService")));
 
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("BookingPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "https://localhost:7000");
+        // Optionally allow specific methods (GET, POST, etc.)
+        policy.WithMethods("GET", "POST", "PUT", "DELETE");
+        // Optionally allow specific headers
+        policy.WithHeaders("Content-Type", "Authorization");
+    });
+});
+
 var app = builder.Build();
 
 
@@ -53,6 +66,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseMigrations();
+
+app.UseCors("BookingPolicy");
 
 app.UseAuthentication();
 
