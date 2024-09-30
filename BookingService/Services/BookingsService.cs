@@ -41,6 +41,8 @@ namespace BookingService.Services
             return await _context.Bookings.Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
 
+
+
         public async Task<StripeRequestDto> MakePayments(StripeRequestDto stripeRequestDto)
         {
 
@@ -61,7 +63,7 @@ namespace BookingService.Services
                 PriceData = new SessionLineItemPriceDataOptions()
                 {
                     UnitAmount = (long)booking.BookingTotal * 100,
-                    Currency = "kes",
+                    Currency = "usd",
 
                     ProductData = new SessionLineItemPriceDataProductDataOptions()
                     {
@@ -109,10 +111,16 @@ namespace BookingService.Services
             return stripeRequestDto;
         }
 
+
+
+
         public async Task saveChanges()
         {
             await _context.SaveChangesAsync();
         }
+
+
+
 
         public async Task<bool> ValidatePayments(Guid BookingId)
         {
