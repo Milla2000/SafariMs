@@ -53,7 +53,8 @@ namespace BookingService.Services
                 SuccessUrl = stripeRequestDto.ApprovedUrl,
                 CancelUrl = stripeRequestDto.CancelUrl,
                 Mode = "payment",
-                LineItems = new List<SessionLineItemOptions>()
+                LineItems = new List<SessionLineItemOptions>(),
+                PaymentMethodTypes = new List<string> { "card" }
             };
 
 
