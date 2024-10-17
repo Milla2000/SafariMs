@@ -52,6 +52,7 @@ namespace TourService.Controllers
 
 
         [HttpGet("getAllTours")]
+        [Authorize]
         public async Task<ActionResult<ResponseDto>> getAllTourz()
         {
            
@@ -63,7 +64,7 @@ namespace TourService.Controllers
 
 
         [HttpGet("getATour/{Id}")]
-
+       
         public async Task<ActionResult<ResponseDto>> getATour(Guid Id)
         {
 

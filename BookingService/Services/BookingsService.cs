@@ -101,7 +101,7 @@ namespace BookingService.Services
             // URL//ID
 
             stripeRequestDto.StripeSessionUrl=session.Url;
-            stripeRequestDto.StripeSessionId = session.Id;
+           // stripeRequestDto.StripeSessionId = session.Id;
 
             //update Database =>status/ SessionId 
 
@@ -109,6 +109,9 @@ namespace BookingService.Services
             booking.Status = "Ongoing";
             await _context.SaveChangesAsync();
 
+
+            // Set booking ID in the response
+            
             return stripeRequestDto;
         }
 
@@ -149,15 +152,15 @@ namespace BookingService.Services
                 }
                 else
                 {
-                    var reward = new RewardsDto()
-                    {
-                        BookingId = booking.Id,
-                        BookingTotal=booking.BookingTotal,
-                        Name= user.Name,
-                        Email= user.Email
+                    //var reward = new RewardsDto()
+                    //{
+                    //    BookingId = booking.Id,
+                    //    BookingTotal=booking.BookingTotal,
+                    //    Name= user.Name,
+                    //    Email= user.Email
 
-                    };
-                    await _messageBUs.PublishMessage(reward, "bookingadded");
+                    //};
+                    //await _messageBUs.PublishMessage(reward, "bookingadded");
                 }
 
                 // Send an Email to User
