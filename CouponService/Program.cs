@@ -22,6 +22,22 @@ builder.Services.AddScoped<ICoupon, CouponsService>();
 
 //Register AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CouponPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "https://localhost:7000");
+        // Optionally allow specific methods (GET, POST, etc.)
+        policy.WithMethods("GET", "POST", "PUT", "DELETE");
+        // Optionally allow specific headers
+        policy.WithHeaders("Content-Type", "Authorization");
+    });
+});
+
+
+
 //custom services
 builder.AddAuth();
 builder.AddSwaggenGenExtension();
@@ -41,6 +57,8 @@ Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("Stri
 app.UseMigrations();
 
 app.UseHttpsRedirection();
+
+app.UseCors("CouponPolicy");
 
 app.UseAuthentication();
 

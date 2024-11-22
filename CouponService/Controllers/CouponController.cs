@@ -23,7 +23,7 @@ namespace CouponService.Controllers
             _response = new ResponseDto();
         }
 
-        [HttpGet]
+        [HttpGet("getAll")]
 
         public async Task<ActionResult<ResponseDto>> GetAllCoupons()
         {
@@ -47,7 +47,7 @@ namespace CouponService.Controllers
         }
 
 
-        [HttpGet("{Code}")]
+        [HttpGet("getCoupun/{Code}")]
 
         public async Task<ActionResult<ResponseDto>> GetCoupon(string Code)
         {
@@ -62,7 +62,7 @@ namespace CouponService.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("addCoupon")]
         [Authorize(Roles ="admin")]
         public async Task<ActionResult<ResponseDto>> AddCoupon(AddCouponDto newCoupon)
         {
@@ -75,7 +75,7 @@ namespace CouponService.Controllers
             var options = new CouponCreateOptions()
             {
                 AmountOff = (long) newCoupon.CouponAmount *100,
-                Currency = "kes",
+                Currency = "usd",
                 Id = newCoupon.CouponCode,
                 Name = newCoupon.CouponCode
             };
@@ -97,7 +97,7 @@ namespace CouponService.Controllers
         }
 
 
-        [HttpPut("{Id}")]
+        [HttpPut("updateCoupon/{Id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<ResponseDto>> updateCoupon(Guid Id, AddCouponDto UCoupon)
         {
@@ -130,7 +130,7 @@ namespace CouponService.Controllers
             return Ok(_response);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("deleteCoupon/{Id}")]
         [Authorize(Roles = "admin")]
         public async Task<ActionResult<ResponseDto>> deleteCoupon(Guid Id)
         {

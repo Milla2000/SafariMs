@@ -136,7 +136,7 @@ namespace BookingService.Controllers
             }
             else
             {
-                _responseDto.Errormessage = "Total amount is less that the minimum amount for this coupon";
+                _responseDto.Errormessage = "Total amount is less than the minimum amount for this coupon";
                 return BadRequest(_responseDto);
             }
 

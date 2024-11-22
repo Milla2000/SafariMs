@@ -96,17 +96,16 @@ namespace AuthService.Services
                 //if this succeeded
                 if(result.Succeeded)
                 {
+                    // Does the role exist?
+                    if (!await _roleManager.RoleExistsAsync(userDto.Role))
+                    {
+                        // Create the role
+                        await _roleManager.CreateAsync(new IdentityRole(userDto.Role));
+                    }
 
-                    ////does the role exist 
-                    //if (!_roleManager.RoleExistsAsync(userDto.Role).GetAwaiter().GetResult())
-                    //{
-                    //    //create the role 
-                    //    await _roleManager.CreateAsync(new IdentityRole(userDto.Role));
-                    //}
-
-                    ////assign the user the role
-                    //await _userManager.AddToRoleAsync(user, userDto.Role);
-                    return string.Empty;
+                    // Assign the user the role
+                    await _userManager.AddToRoleAsync(user, userDto.Role);
+                    return string.Empty; // Registration successful
                 }
                 else
                 {
