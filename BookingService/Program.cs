@@ -11,10 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//add the swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+//add the database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("myconnection"));
@@ -24,6 +25,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.AddAuth();
 builder.AddSwaggenGenExtension();
 
+
+//dependency injection for the services
 builder.Services.AddScoped<IHotel, HotelService>();
 builder.Services.AddScoped<ITour, TourService>();
 builder.Services.AddScoped<IBooking, BookingsService>();
@@ -31,6 +34,7 @@ builder.Services.AddScoped<ICoupon, CouponService>();
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<IMessageBus, MessageBus>();
 
+//add the http client for making requests to other services
 builder.Services.AddHttpClient("Tours", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:TourService")));
 builder.Services.AddHttpClient("Coupons", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:CouponService")));
 builder.Services.AddHttpClient("Hotels", c => c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:HotelService")));
@@ -48,6 +52,7 @@ builder.Services.AddCors(options =>
         // Optionally allow specific headers
         policy.WithHeaders("Content-Type", "Authorization");
     });
+
 });
 
 var app = builder.Build();

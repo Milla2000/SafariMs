@@ -47,7 +47,7 @@ namespace CouponService.Controllers
         }
 
 
-        [HttpGet("getCoupun/{Code}")]
+        [HttpGet("getCoupon/{Code}")]
 
         public async Task<ActionResult<ResponseDto>> GetCoupon(string Code)
         {

@@ -107,7 +107,7 @@ namespace BookingService.Controllers
 
         }
 
-        [HttpPut("{couponId}")]
+        [HttpPut("applycoupon")]
 
         public async Task<ActionResult<ResponseDto>> ApplyCoupon(Guid Id, string Code)
         {
