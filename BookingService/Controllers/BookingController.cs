@@ -130,8 +130,17 @@ namespace BookingService.Controllers
             {
                 booking.CouponCode = coupon.CouponCode;
                 booking.Discount = coupon.CouponAmount;
+                booking.BookingTotal = booking.BookingTotal - coupon.CouponAmount;
                 await _bookingService.saveChanges();
-                _responseDto.Result = "Code applied";
+
+
+                _responseDto.Result = new
+                {
+                    Message = "Code applied",
+                    Total = booking.BookingTotal 
+                };
+
+               
                 return Ok(_responseDto);
             }
             else

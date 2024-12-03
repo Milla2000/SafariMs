@@ -152,15 +152,14 @@ namespace BookingService.Services
                 }
                 else
                 {
-                    //var reward = new RewardsDto()
-                    //{
-                    //    BookingId = booking.Id,
-                    //    BookingTotal=booking.BookingTotal,
-                    //    Name= user.Name,
-                    //    Email= user.Email
-
-                    //};
-                    //await _messageBUs.PublishMessage(reward, "bookingadded");
+                    var reward = new RewardsDto()
+                    {
+                        BookingId = booking.Id,
+                        BookingTotal = booking.BookingTotal,
+                        Name = user.Name,
+                        Email = user.Email
+                    };
+                    await _messageBUs.PublishMessage(reward, "bookingadded");
                 }
 
                 // Send an Email to User
