@@ -111,44 +111,55 @@ namespace BookingService.Controllers
 
         public async Task<ActionResult<ResponseDto>> ApplyCoupon(Guid Id, string Code)
         {
-            //get the tour and the hotel
-          var booking= await _bookingService.GetBookingById(Id);
-        
+            // Get the booking by ID
+            var booking = await _bookingService.GetBookingById(Id);
+
             if (booking == null)
             {
                 _responseDto.Errormessage = "Booking Not Found";
                 return NotFound(_responseDto);
             }
-            var coupon= await _couponService.GetCouponByCouponCode(Code);
+
+            // Check if a coupon has already been applied
+            if (!string.IsNullOrEmpty(booking.CouponCode))
+            {
+                _responseDto.Errormessage = "A coupon has already been applied to this booking.";
+                return BadRequest(_responseDto);
+            }
+
+            // Get the coupon by code
+            var coupon = await _couponService.GetCouponByCouponCode(Code);
+
             if (coupon == null)
             {
-                _responseDto.Errormessage = "Coupon is not Valid";
+                _responseDto.Errormessage = "Coupon is not valid.";
                 return NotFound(_responseDto);
             }
 
-           if(coupon.CouponMinAmount<= booking.BookingTotal)
+            // Check if the booking total meets the coupon's minimum amount requirement
+            if (coupon.CouponMinAmount <= booking.BookingTotal)
             {
+                // Apply the coupon to the booking
                 booking.CouponCode = coupon.CouponCode;
                 booking.Discount = coupon.CouponAmount;
-                booking.BookingTotal = booking.BookingTotal - coupon.CouponAmount;
-                await _bookingService.saveChanges();
+                booking.BookingTotal -= coupon.CouponAmount;
 
+                await _bookingService.saveChanges();
 
                 _responseDto.Result = new
                 {
-                    Message = "Code applied",
-                    Total = booking.BookingTotal 
+                    Message = "Coupon applied successfully.",
+                    Total = booking.BookingTotal
                 };
 
-               
                 return Ok(_responseDto);
             }
             else
             {
-                _responseDto.Errormessage = "Total amount is less than the minimum amount for this coupon";
+                _responseDto.Errormessage = "Total amount is less than the minimum required for this coupon.";
                 return BadRequest(_responseDto);
             }
-
         }
+
     }
 }
